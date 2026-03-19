@@ -1,46 +1,53 @@
 /* css/_components/form.css */
 .contact-form-wrapper {
-  background-color: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
-  border-radius: var(--radius-xl);
-  padding: var(--spacing-xl);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  background-color: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(16px);
+  border-radius: 28px;
+  padding: var(--spacing-xxl);
+  border: 1px solid rgba(142, 68, 173, 0.1);
+  box-shadow: 0 12px 35px -10px rgba(142, 68, 173, 0.08), 0 4px 15px rgba(0,0,0,0.03);
 }
 .contact-form {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-md);
+  gap: var(--spacing-lg);
 }
 .form-group {
   display: flex;
   flex-direction: column;
 }
 .form-group label {
-  color: var(--color-white);
-  font-weight: 500;
+  color: var(--color-text-primary);
+  font-weight: 600;
+  font-size: var(--font-size-sm);
   margin-bottom: var(--spacing-xs);
 }
 .contact-form input, .contact-form select, .contact-form textarea {
-  padding: 10px 0;
+  padding: 12px 0;
   border: none;
-  border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+  border-bottom: 2px solid rgba(142, 68, 173, 0.2);
   border-radius: 0;
   border-top-left-radius: 4px; border-top-right-radius: 4px;
   background-color: transparent;
-  color: var(--color-white);
+  color: var(--color-text-primary);
+  font-family: var(--font-primary);
   font-size: var(--font-size-base);
-  transition: border-color var(--transition-fast), background-color var(--transition-fast);
+  transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+.contact-form input::placeholder, .contact-form textarea::placeholder {
+  color: var(--color-text-tertiary);
+  opacity: 0.8;
 }
 .contact-form input:focus, .contact-form select:focus, .contact-form textarea:focus {
   outline: none;
   border-bottom-color: var(--color-mint);
-  background-color: rgba(255, 255, 255, 0.05);
+  background-color: rgba(142, 68, 173, 0.03);
 }
 .contact-form input:focus::placeholder, .contact-form textarea:focus::placeholder {
   opacity: 0;
 }
 .error-message {
-  color: var(--color-error);
+  color: #d63031;
   font-size: var(--font-size-sm);
   margin-top: var(--spacing-xs);
   min-height: 20px;

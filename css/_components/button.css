@@ -11,7 +11,7 @@
   text-transform: uppercase;
   letter-spacing: 0.5px;
   text-decoration: none;
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-full);
   cursor: pointer;
   transition: all var(--transition-normal);
   text-align: center;

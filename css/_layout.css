@@ -43,6 +43,17 @@ html {
   .col-lg-3 { grid-column: span 3; }
 }
 
+.section-header {
+  margin-bottom: var(--spacing-xxl);
+  text-align: center;
+}
+
+.section-subtitle {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-lg);
+  margin-top: var(--spacing-sm);
+}
+
 .section-divider {
   width: 100%;
   height: 24px;

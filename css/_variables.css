@@ -1,11 +1,16 @@
 /* css/_variables.css */
 :root {
   /* Primary Palette (Purple Waves Theme) */
-  --color-mint: #8E44AD; /* Medium Purple */
-  --color-lavender: #D2B4DE; /* Pastel Purple */
-  --color-peach: #EBDEF0; /* Soft Lilac */
-  --color-cream: #FDFBFD; /* Extremely soft pastel off-white */
-  --color-sage: #5B2C6F; /* Deep Purple */
+  --color-mint: #8E44AD;
+  /* Medium Purple */
+  --color-lavender: #D2B4DE;
+  /* Pastel Purple */
+  --color-peach: #EBDEF0;
+  /* Soft Lilac */
+  --color-cream: #FDFBFD;
+  /* Extremely soft pastel off-white */
+  --color-sage: #5B2C6F;
+  /* Deep Purple */
 
   /* Neutrals (Material Design Inspired) */
   --color-white: #FFFFFF;
@@ -55,11 +60,12 @@
   --radius-full: 9999px;
 
   /* Material Design Elevation (Shadows) */
-  --shadow-1: 0 2px 4px rgba(0,0,0,0.05);
-  --shadow-2: 0 4px 8px rgba(0,0,0,0.07);
-  --shadow-3: 0 8px 16px rgba(0,0,0,0.09);
-  --shadow-4: 0 12px 24px rgba(0,0,0,0.12);
-  --shadow-xl: 0 20px 40px rgba(0,0,0,0.08); /* Re-added shadow-xl */
+  --shadow-1: 0 2px 4px rgba(0, 0, 0, 0.05);
+  --shadow-2: 0 4px 8px rgba(0, 0, 0, 0.07);
+  --shadow-3: 0 8px 16px rgba(0, 0, 0, 0.09);
+  --shadow-4: 0 12px 24px rgba(0, 0, 0, 0.12);
+  --shadow-xl: 0 20px 40px rgba(0, 0, 0, 0.08);
+  /* Re-added shadow-xl */
   --shadow-glow: 0 8px 20px rgba(142, 68, 173, 0.3);
 
   /* Glassmorphism & Aesthetics */

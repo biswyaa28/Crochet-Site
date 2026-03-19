@@ -21,5 +21,20 @@ document.addEventListener('DOMContentLoaded', () => {
     new ScrollAnimations(canAnimateCheck);
     new Wishlist();
     
+    // 4. Hero Bouquet Entrance Animation
+    const heroBouquet = document.getElementById('heroBouquet');
+    if (heroBouquet && typeof anime !== 'undefined') {
+        anime({
+            targets: heroBouquet,
+            translateY: [80, 0],
+            scale: [0.9, 1],
+            rotate: [5, 0],
+            opacity: [0, 1],
+            duration: 3000,
+            delay: 100,
+            easing: 'easeOutQuart'
+        });
+    }
+    
     console.log('[CraftedLoop Ecosystem] Architecture initialized gracefully executing ES Modules pipeline cleanly seamlessly successfully.');
 });

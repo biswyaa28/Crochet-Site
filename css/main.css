@@ -12,6 +12,7 @@
 @import url('_components/header.css');
 @import url('_components/footer.css');
 @import url('_components/animations.css');
+@import url('_components/modal.css');
 
 @import url('_sections/hero.css');
 @import url('_sections/products.css');

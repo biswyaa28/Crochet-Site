@@ -23,7 +23,7 @@
   <link rel="stylesheet" href="css/main.css">
 </head>
 
-<body>
+<body id="top">
   <!-- Skip Link for Accessibility -->
   <a href="#main-content" class="skip-link">Skip to main content</a>
 
@@ -32,7 +32,7 @@
     <div class="container">
       <div class="header-content">
         <div class="logo">
-          <a href="#" aria-label="SutraKala Home">
+          <a href="index.html" aria-label="SutraKala Home">
             <img src="assets/images/logo.jpg?v=2" alt="Logo" class="site-logo">
             <span class="logo-text">SutraKala</span>
           </a>
@@ -83,6 +83,10 @@
           <a href="#products" class="btn btn-primary">Shop Collection</a>
           <a href="#about" class="btn btn-outline">Our Story</a>
         </div>
+      </div>
+      <div class="hero-bouquet-wrapper">
+        <img src="assets/images/bouquet.png" alt="Crochet Bouquet" class="hero-bouquet" id="heroBouquet"
+          loading="eager">
       </div>
     </section>
 
@@ -251,14 +255,14 @@
         <div class="about-content fade-in-up">
           <div class="about-text">
             <h2 id="about-title">Our Story</h2>
-            <p>Founded in the heart of Mumbai, CraftedLoop began as a small passion project in 2018. What started as a
-              hobby during quiet afternoons has blossomed into a thriving community of skilled artisans dedicated to
-              preserving the beautiful art of crochet.</p>
-            <p>Each piece in our collection is lovingly handcrafted by talented women artisans from Maharashtra. We
-              believe in sustainable fashion, fair wages, and the timeless beauty of handmade products.</p>
-            <p>Our yarn is carefully sourced from ethical suppliers, ensuring that every stitch contributes to a better
-              world. When you choose CraftedLoop, you're not just buying a product – you're supporting traditional
-              craftsmanship and empowering local communities.</p>
+            <p>Sutra Kala was founded in 2026 in Jammu, with a vision to celebrate the beauty of handmade art and
+              timeless craftsmanship.</p>
+            <p>Founded by Simritee Bali, the brand reflects a passion for creativity and detail. With Yashnandanii as a
+              partner, the journey grew stronger and more purposeful.</p>
+            <p>Our creations come to life through the skilled hands of Working Partner Sunita Devi, whose dedication
+              adds soul to every piece. With the constant support of Miss Sonia, Sutra Kala continues to grow and
+              evolve.</p>
+            <p>From Jammu to everywhere we weave stories into every thread.</p>
             <div class="about-stats">
               <div class="stat-item">
                 <span class="stat-number">500+</span>
@@ -275,8 +279,7 @@
             </div>
           </div>
           <div class="about-image">
-            <img src="https://images.unsplash.com/photo-1605218427368-35b861218042?w=600&h=600&fit=crop"
-              alt="Artisan working on crochet project with colorful yarn" loading="lazy">
+            <img src="assets/images/logo.jpg" alt="SutraKala Logo" loading="lazy">
           </div>
         </div>
       </div>
@@ -332,7 +335,7 @@
                 <i class="fas fa-map-marker-alt contact-icon" aria-hidden="true"></i>
                 <div>
                   <strong>Address</strong>
-                  <p>123 Artisan Lane, Bandra West<br>Mumbai, Maharashtra 400050<br>India</p>
+                  <p>Jammu, Jammu & Kashmir<br>India</p>
                 </div>
               </div>
 
@@ -340,7 +343,7 @@
                 <i class="fas fa-phone contact-icon" aria-hidden="true"></i>
                 <div>
                   <strong>Phone</strong>
-                  <p><a href="tel:+919876543210">+91 98765 43210</a></p>
+                  <p><a href="tel:+919103329604">+91 91033 29604</a></p>
                 </div>
               </div>
 
@@ -348,7 +351,7 @@
                 <i class="fas fa-envelope contact-icon" aria-hidden="true"></i>
                 <div>
                   <strong>Email</strong>
-                  <p><a href="mailto:hello@craftedloop.in">hello@craftedloop.in</a></p>
+                  <p><a href="mailto:sutraakala@gmail.com">sutraakala@gmail.com</a></p>
                 </div>
               </div>
 
@@ -356,7 +359,7 @@
                 <i class="fab fa-whatsapp contact-icon" aria-hidden="true"></i>
                 <div>
                   <strong>WhatsApp</strong>
-                  <p><a href="https://wa.me/919876543210" target="_blank" rel="noopener">Chat with us</a></p>
+                  <p><a href="https://wa.me/919103329604" target="_blank" rel="noopener">Chat with us</a></p>
                 </div>
               </div>
 
@@ -364,15 +367,16 @@
                 <i class="fas fa-clock contact-icon" aria-hidden="true"></i>
                 <div>
                   <strong>Business Hours</strong>
-                  <p>Monday - Saturday: 10:00 AM - 7:00 PM<br>Sunday: By appointment</p>
+                  <p>By appointment only.</p>
                 </div>
               </div>
             </div>
 
             <div class="social-links">
-              <a href="#" class="social-link" aria-label="Follow us on Instagram"><i class="fab fa-instagram"></i></a>
-              <a href="#" class="social-link" aria-label="Follow us on Facebook"><i class="fab fa-facebook"></i></a>
-              <a href="#" class="social-link" aria-label="Follow us on Pinterest"><i class="fab fa-pinterest"></i></a>
+              <a href="https://www.instagram.com/sutrakala._?igsh=MjBrMWRlbHFqczl4" class="social-link"
+                aria-label="Follow us on Instagram"><i class="fab fa-instagram"></i></a>
+              <a href="https://pin.it/70KzShSzz" class="social-link" aria-label="Follow us on Pinterest"><i
+                  class="fab fa-pinterest"></i></a>
             </div>
           </div>
 
@@ -428,47 +432,41 @@
   <!-- Footer -->
   <footer class="footer" role="contentinfo">
     <div class="container">
-      <div class="footer-content">
-        <div class="footer-column">
-          <h3><i class="fas fa-yarn" aria-hidden="true"></i> CraftedLoop</h3>
-          <p>Handmade crochet products crafted with love in Mumbai, India. Supporting local artisans and traditional
-            craftsmanship.</p>
+      <div class="footer-compact">
+        <div class="footer-brand">
+          <a href="#top" class="footer-logo group">
+            <img src="assets/images/logo.jpg" alt="SutraKala Logo" class="footer-site-logo spin-on-hover">
+            <span>SutraKala</span>
+          </a>
         </div>
 
-        <div class="footer-column">
-          <h3>Quick Links</h3>
-          <ul class="footer-links">
-            <li><a href="#products">Products</a></li>
-            <li><a href="#about">About Us</a></li>
-            <li><a href="#gallery">Gallery</a></li>
-            <li><a href="#contact">Contact</a></li>
-          </ul>
-        </div>
+        <nav class="footer-nav">
+          <a href="#products" class="footer-link">Shop</a>
+          <a href="#about" class="footer-link">Our Story</a>
+          <a href="#gallery" class="footer-link">Gallery</a>
+          <a href="#" class="footer-link">Care Guide</a>
+          <a href="#contact" class="footer-link">Contact</a>
+        </nav>
 
-        <div class="footer-column">
-          <h3>Customer Care</h3>
-          <ul class="footer-links">
-            <li><a href="#">Shipping Policy</a></li>
-            <li><a href="#">Returns & Exchanges</a></li>
-            <li><a href="#">Care Instructions</a></li>
-            <li><a href="#">FAQs</a></li>
-          </ul>
-        </div>
-
-        <div class="footer-column">
-          <h3>Connect With Us</h3>
-          <div class="social-links footer-social">
-            <a href="#" class="social-link" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-            <a href="#" class="social-link" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
-            <a href="#" class="social-link" aria-label="Pinterest"><i class="fab fa-pinterest"></i></a>
-            <a href="#" class="social-link" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
-          </div>
+        <div class="footer-social-compact">
+          <a href="#" class="social-icon float-hover" aria-label="Instagram">
+            <i class="fab fa-instagram"></i>
+          </a>
+          <a href="#" class="social-icon float-hover" aria-label="Facebook">
+            <i class="fab fa-facebook"></i>
+          </a>
+          <a href="#" class="social-icon float-hover" aria-label="Pinterest">
+            <i class="fab fa-pinterest"></i>
+          </a>
+          <a href="#" class="social-icon float-hover" aria-label="WhatsApp">
+            <i class="fab fa-whatsapp"></i>
+          </a>
         </div>
       </div>
 
-      <div class="footer-bottom">
-        <p>&copy; 2024 CraftedLoop. All rights reserved. | Made with <i class="fas fa-heart" aria-hidden="true"></i> in
-          Mumbai</p>
+      <div class="footer-bottom-compact">
+        <p>&copy; 2026 SutraKala.</p>
+        <p class="footer-made-with">Made with 🧶 in Jammu, India</p>
       </div>
     </div>
   </footer>
@@ -512,6 +510,7 @@
   </div>
 
   <!-- JavaScript -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
   <script type="module" src="js/main.js"></script>
 </body>
 
