@@ -150,7 +150,7 @@ export class ShoppingCart {
     checkout() {
         if (this.items.length === 0) return;
         
-        let message = "Hi CraftedLoop, I would like to order the following items:%0A%0A";
+        let message = "Hi SutraKala, I would like to order the following items:%0A%0A";
         let total = 0;
         
         this.items.forEach((item, index) => {
