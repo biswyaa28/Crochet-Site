@@ -16,14 +16,20 @@ function formatPrice(price) {
 
 /**
  * Get optimized image URL from Sanity
- * @param {Object} image - Sanity image object
+ * @param {Object} product - Product object with image data
  * @returns {string} Optimized image URL
  */
-function getProductImageUrl(image) {
-  if (!image) {
-    return 'https://images.unsplash.com/photo-1606232099478-3e5d8e4c0f6e?w=400&h=400&fit=crop'
+function getProductImageUrl(product) {
+  // Use pre-fetched imageUrl if available
+  if (product.imageUrl) {
+    return `${product.imageUrl}?w=400&h=400&fit=crop`
   }
-  return urlFor(image).width(400).height(400).fit('crop').url()
+  // Fallback to urlFor builder
+  if (product.image) {
+    return urlFor(product.image).width(400).height(400).fit('crop').url()
+  }
+  // Default placeholder
+  return 'https://images.unsplash.com/photo-1606232099478-3e5d8e4c0f6e?w=400&h=400&fit=crop'
 }
 
 /**
@@ -42,13 +48,14 @@ function createProductCard(product, index) {
     price,
     salePrice,
     image,
-    images,
+    imageUrl: productImageUrl,
     inStock = true
   } = product
 
   const productName = title || name || 'Untitled Product'
-  const productImage = image || images?.[0]
-  const imageUrl = getProductImageUrl(productImage)
+  const imageUrl = productImageUrl 
+    ? `${productImageUrl}?w=400&h=400&fit=crop` 
+    : getProductImageUrl(product)
   const displayPrice = salePrice || price
   const delayClass = index % 3 === 1 ? 'delay-1' : index % 3 === 2 ? 'delay-2' : ''
   const productSlug = slug?.current || _id

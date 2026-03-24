@@ -1,12 +1,8 @@
 /**
  * Sanity CMS Client Configuration
  * Single source of truth for all Sanity CMS interactions
- *
- * @see https://www.sanity.io/docs/javascript-client
+ * Uses fetch API directly for browser compatibility
  */
-
-import { createClient } from '@sanity/client'
-import imageUrlBuilder from '@sanity/image-url'
 
 /**
  * Sanity configuration object
@@ -18,33 +14,102 @@ export const sanityConfig = {
   useCdn: true
 }
 
-/**
- * Sanity client instance with configuration from environment variables
- * Falls back to hardcoded values for development convenience
- */
-export const sanityClient = createClient({
-  projectId: import.meta.env.VITE_SANITY_PROJECT_ID || sanityConfig.projectId,
-  dataset: import.meta.env.VITE_SANITY_DATASET || sanityConfig.dataset,
-  apiVersion: sanityConfig.apiVersion,
-  useCdn: import.meta.env.PROD ?? sanityConfig.useCdn,
-  token: import.meta.env.VITE_SANITY_API_TOKEN,
-  perspective: 'published'
-})
+// Build API URL
+const SANITY_API_URL = `https://${sanityConfig.projectId}.${sanityConfig.useCdn ? 'apicdn' : 'api'}.sanity.io/v${sanityConfig.apiVersion}/data/query/${sanityConfig.dataset}`
 
 /**
- * Image URL builder for Sanity images
- * @param {Object} source - Sanity image asset reference
- * @returns {Object} Image URL builder instance
- *
- * @example
- * import { urlFor } from '@services/sanity/client'
- *
- * const imageUrl = urlFor(product.image).width(400).height(300).url()
+ * Execute a GROQ query against Sanity API
+ * @param {string} query - GROQ query string
+ * @param {Object} params - Query parameters
+ * @returns {Promise<any>} - Query result
  */
-const builder = imageUrlBuilder(sanityClient)
+async function sanityFetch(query, params = {}) {
+  try {
+    const encodedQuery = encodeURIComponent(query)
+    let url = `${SANITY_API_URL}?query=${encodedQuery}`
 
+    // Add parameters
+    Object.entries(params).forEach(([key, value]) => {
+      url += `&$${key}=${encodeURIComponent(JSON.stringify(value))}`
+    })
+
+    const response = await fetch(url)
+    
+    if (!response.ok) {
+      throw new Error(`Sanity API error: ${response.status} ${response.statusText}`)
+    }
+
+    const data = await response.json()
+    return data.result
+  } catch (error) {
+    console.error('Sanity fetch error:', error)
+    throw error
+  }
+}
+
+/**
+ * Sanity client-like interface for compatibility
+ */
+export const sanityClient = {
+  fetch: sanityFetch
+}
+
+/**
+ * Generate image URL from Sanity image reference
+ * @param {Object} source - Sanity image object with asset reference
+ * @returns {Object} Image URL builder chain
+ */
 export function urlFor(source) {
-  return builder.image(source)
+  if (!source) {
+    return {
+      width: () => urlFor(source),
+      height: () => urlFor(source),
+      fit: () => urlFor(source),
+      quality: () => urlFor(source),
+      auto: () => urlFor(source),
+      format: () => urlFor(source),
+      url: () => ''
+    }
+  }
+
+  let options = {}
+  
+  const builder = {
+    width: (w) => { options.w = w; return builder },
+    height: (h) => { options.h = h; return builder },
+    fit: (f) => { options.fit = f; return builder },
+    quality: (q) => { options.q = q; return builder },
+    auto: (a) => { options.auto = a; return builder },
+    format: (f) => { options.fm = f; return builder },
+    url: () => {
+      // Handle direct URL
+      if (source.asset?.url) {
+        let url = source.asset.url
+        const params = Object.entries(options)
+          .map(([k, v]) => `${k}=${v}`)
+          .join('&')
+        return params ? `${url}?${params}` : url
+      }
+      
+      // Handle asset reference
+      const ref = source.asset?._ref || source._ref
+      if (!ref) return ''
+      
+      // Parse: image-{id}-{dimensions}-{format}
+      const [, id, dimensions, format] = ref.split('-')
+      if (!id || !dimensions || !format) return ''
+      
+      let url = `https://cdn.sanity.io/images/${sanityConfig.projectId}/${sanityConfig.dataset}/${id}-${dimensions}.${format}`
+      
+      const params = Object.entries(options)
+        .map(([k, v]) => `${k}=${v}`)
+        .join('&')
+      
+      return params ? `${url}?${params}` : url
+    }
+  }
+  
+  return builder
 }
 
 /**
@@ -79,14 +144,17 @@ export default sanityClient
 export async function fetchProducts(filters = {}) {
   const { featured, inStock, category, limit } = filters
 
-  let filterConditions = ['_type == "product"', 'defined(slug.current)']
+  let filterConditions = ['_type == "product"']
 
-  if (featured !== undefined) {
-    filterConditions.push(`featured == ${featured}`)
+  if (featured === true) {
+    filterConditions.push(`featured == true`)
   }
 
-  if (inStock !== undefined) {
-    filterConditions.push(`inStock == ${inStock}`)
+  // Only filter by inStock if explicitly requested - treat undefined as in stock
+  if (inStock === true) {
+    filterConditions.push(`(inStock == true || !defined(inStock))`)
+  } else if (inStock === false) {
+    filterConditions.push(`inStock == false`)
   }
 
   if (category) {
@@ -107,6 +175,7 @@ export async function fetchProducts(filters = {}) {
       price,
       salePrice,
       image,
+      "imageUrl": image.asset->url,
       images,
       category->{
         _id,
@@ -120,8 +189,8 @@ export async function fetchProducts(filters = {}) {
   `
 
   try {
-    const products = await sanityClient.fetch(query)
-    return products
+    const products = await sanityFetch(query)
+    return products || []
   } catch (error) {
     console.error('Error fetching products from Sanity:', error)
     throw error
@@ -139,7 +208,7 @@ export async function fetchGallery(options = {}) {
   const limitString = limit ? `[0...${limit}]` : ''
 
   const query = `
-    *[_type == "gallery" && defined(slug.current)] | order(publishedAt desc) ${limitString} {
+    *[_type == "gallery"] | order(publishedAt desc) ${limitString} {
       _id,
       title,
       slug,
@@ -157,8 +226,8 @@ export async function fetchGallery(options = {}) {
   `
 
   try {
-    const gallery = await sanityClient.fetch(query)
-    return gallery
+    const gallery = await sanityFetch(query)
+    return gallery || []
   } catch (error) {
     console.error('Error fetching gallery from Sanity:', error)
     throw error
