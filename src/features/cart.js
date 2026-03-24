@@ -31,12 +31,22 @@ export class ShoppingCart {
             this.showToast(`${productName} added to cart!`);
         });
 
-        // Cart button - navigate to cart page
+        // Cart button - open cart modal
         const cartBtn = $('#cartBtn');
         if (cartBtn) {
             cartBtn.addEventListener('click', () => {
-                window.location.href = '/public/cart.html';
+                this.openModal();
             });
+        }
+        
+        // Close modal buttons
+        const cartModalClose = $('#cartModalClose');
+        const cartModalOverlay = $('#cartModalOverlay');
+        if (cartModalClose) {
+            cartModalClose.addEventListener('click', () => this.closeModal());
+        }
+        if (cartModalOverlay) {
+            cartModalOverlay.addEventListener('click', () => this.closeModal());
         }
 
         // Checkout logic
@@ -108,7 +118,9 @@ export class ShoppingCart {
     }
 
     addItem(item) {
+        console.log('Adding item to cart:', item);
         this.items.push(item);
+        console.log('Cart items after add:', this.items);
         this.saveAndRender();
     }
 
@@ -118,6 +130,7 @@ export class ShoppingCart {
     }
 
     saveAndRender() {
+        console.log('Saving items to localStorage:', this.items);
         storage.set('craftedloop_cart', this.items);
         this.updateBadge();
         this.renderCart();
@@ -139,7 +152,17 @@ export class ShoppingCart {
     }
 
     renderCart() {
-        if (!this.cartItemsContainer || !this.cartEmpty || !this.cartTotalEl) return;
+        console.log('Rendering cart. Items:', this.items);
+        console.log('DOM elements:', {
+            cartItemsContainer: this.cartItemsContainer,
+            cartEmpty: this.cartEmpty,
+            cartTotalEl: this.cartTotalEl
+        });
+        
+        if (!this.cartItemsContainer || !this.cartEmpty || !this.cartTotalEl) {
+            console.warn('Cart DOM elements not found, skipping render');
+            return;
+        }
         
         // Clean out invalid items that might have been saved in an older format
         this.items = this.items.filter(item => item && item.id);
