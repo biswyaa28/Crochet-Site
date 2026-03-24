@@ -4,8 +4,8 @@
  * Copies built assets from public/ to root directory for Firebase hosting
  */
 
-import { copyFileSync, mkdirSync, rmSync, readdirSync } from 'fs';
-import { dirname, resolve } from 'path';
+import { copyFileSync, mkdirSync, rmSync, readdirSync, lstatSync, existsSync } from 'fs';
+import { dirname, resolve, join } from 'path';
 import { fileURLToPath } from 'url';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -180,3 +180,39 @@ for (const file of utilsFiles) {
 }
 
 console.log('\n✓ Post-build copy complete!');
+
+// ===== COPY ASSETS TO PUBLIC FOR VERCEL =====
+// Vercel doesn't follow symlinks, so we need to copy assets to public/assets
+const assetsSrc = resolve(projectRoot, 'assets');
+const assetsDest = resolve(projectRoot, 'public/assets');
+
+function copyDirectoryRecursiveAll(srcDir, destDir) {
+  // Remove symlink or existing directory
+  if (existsSync(destDir)) {
+    const stat = lstatSync(destDir);
+    if (stat.isSymbolicLink() || stat.isDirectory()) {
+      rmSync(destDir, { recursive: true, force: true });
+    }
+  }
+  
+  mkdirSync(destDir, { recursive: true });
+  
+  const entries = readdirSync(srcDir, { withFileTypes: true });
+  for (const entry of entries) {
+    const srcPath = join(srcDir, entry.name);
+    const destPath = join(destDir, entry.name);
+    
+    if (entry.isDirectory()) {
+      copyDirectoryRecursiveAll(srcPath, destPath);
+    } else if (entry.isFile()) {
+      copyFileSync(srcPath, destPath);
+    }
+  }
+}
+
+try {
+  copyDirectoryRecursiveAll(assetsSrc, assetsDest);
+  console.log('✓ Copied assets/ to public/assets/ for Vercel deployment');
+} catch (error) {
+  console.error('Warning: Could not copy assets:', error.message);
+}
