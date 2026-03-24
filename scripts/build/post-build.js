@@ -216,3 +216,20 @@ try {
 } catch (error) {
   console.error('Warning: Could not copy assets:', error.message);
 }
+
+// ===== COPY JS FILES TO PUBLIC/JS FOR VERCEL DEPLOYMENT =====
+// Vercel serves from /public directory only, so we need all JS files there
+console.log('\n📦 Copying JS files to public/js for Vercel...');
+
+try {
+  // Copy the entire /js directory to /public/js for Vercel
+  const rootJsSource = resolve(projectRoot, 'js');
+  const publicJsDestination = resolve(projectRoot, 'public/js');
+  
+  // Don't delete public/js first, just merge/overwrite
+  copyDirectoryRecursiveAll(rootJsSource, publicJsDestination);
+  console.log('✓ Copied all JS files to public/js for Vercel deployment');
+} catch (error) {
+  console.error('✗ Failed to copy JS files to public/js:', error.message);
+}
+

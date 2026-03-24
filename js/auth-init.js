@@ -33,7 +33,16 @@ async function initAuth() {
       loginModal
     };
   } catch (error) {
-    // Error handling
+    // Show fallback login button if initialization fails
+    const container = document.getElementById('authUIContainer');
+    if (container) {
+      container.innerHTML = `
+        <a href="/login.html" class="auth-login-btn" aria-label="Login to your account">
+          <i class="fas fa-user" aria-hidden="true"></i>
+          <span>Login</span>
+        </a>
+      `;
+    }
   }
 }
 

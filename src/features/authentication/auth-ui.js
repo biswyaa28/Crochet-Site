@@ -43,12 +43,8 @@ export class AuthUI {
       };
       this.render(currentState);
     } catch (error) {
-      // Show error state but don't crash
-      this.container.innerHTML = `
-        <div class="auth-ui-error" title="${error.message}">
-          <i class="fas fa-exclamation-triangle"></i>
-        </div>
-      `;
+      // Show fallback login button if initialization fails
+      this.renderLoggedOut();
     }
   }
 
@@ -286,7 +282,8 @@ export class AuthUI {
     const currentPage = window.location.pathname.split('/').pop() || 'index.html';
 
     // Redirect to login page with return URL
-    window.location.href = `public/login.html?redirect=${encodeURIComponent(currentPage)}`;
+    // Use absolute path from root to work in both localhost and production
+    window.location.href = `/login.html?redirect=${encodeURIComponent(currentPage)}`;
   }
 
   /**
