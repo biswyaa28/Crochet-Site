@@ -15,6 +15,7 @@ public/js/
 public/*.map
 dist/
 build/
+!scripts/build/
 
 # Build output (root)
 css/
