@@ -45,7 +45,8 @@ This is the **#1 reason** Google Sign-In fails!
 3. Verify these domains are listed:
    - ✅ `localhost` (should be there by default)
    - ✅ `sutrakala-aa44b.firebaseapp.com` (Firebase hosting domain)
-   - ✅ Your production domain (if deployed, e.g., `sutrakala.com`)
+   - ✅ `sutrakala.vercel.app` (Vercel deployment)
+   - ✅ Your custom domain (if any, e.g., `sutrakala.com`)
 
 4. If any are missing, click **"Add domain"** and add them
 
