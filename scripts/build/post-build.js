@@ -162,6 +162,7 @@ mkdirSync(utilsDestDir, { recursive: true });
 
 const utilsFiles = [
   'animation.js',
+  'auth-errors.js',
   'cart-sync.js',
   'dom.js',
   'performance-traces.js',
